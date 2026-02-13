@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
+  <title>For My Love</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Valentine Adventure</title>
   <style>
     body {
       margin: 0;
@@ -11,97 +10,86 @@
       font-family: Arial, sans-serif;
       background: #ffe6f0;
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
       height: 100vh;
+      overflow: hidden;
+    }
+
+    #container {
+      position: relative;
+      width: 100%;
+      height: 100%;
       text-align: center;
     }
 
     h1 {
       font-size: 50px;
-      margin-bottom: 40px;
+      margin-bottom: 50px;
     }
 
-    p {
-      font-size: 28px;
-      margin: 20px;
-    }
-
-    button {
-      font-size: 28px;
-      padding: 20px 40px;
-      margin: 15px;
+    #yesBtn {
+      font-size: 40px;
+      padding: 30px 60px;
+      background-color: pink;
       border: none;
-      border-radius: 15px;
+      border-radius: 20px;
       cursor: pointer;
       transition: all 0.2s ease;
+      z-index: 1;
     }
 
-    .yesBtn {
-      background-color: pink;
-    }
-
-    .noBtn {
+    #noBtn {
+      font-size: 40px;
+      padding: 30px 60px;
       background-color: lightgray;
-    }
-
-    /* Floating hearts */
-    .heart {
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
       position: absolute;
-      font-size: 24px;
-      animation: float 2s linear forwards;
-      pointer-events: none;
-    }
-
-    @keyframes float {
-      0% {transform: translateY(0); opacity: 1;}
-      100% {transform: translateY(-300px); opacity: 0;}
+      z-index: 2;
     }
   </style>
 </head>
 <body>
-
-  <h1>Will you be my Valentine?</h1>
-  <p id="story">I have a little adventure for us! Do you want to join me?</p>
-
-  <div id="choices">
-    <button class="yesBtn" onclick="choose('yes')">Yes, of course!</button>
-    <button class="noBtn" onclick="choose('no')">Hmm… maybe later</button>
+  <div id="container">
+    <h1>Will you be my Valentine?</h1>
+    <button id="yesBtn" onclick="yesClicked()">Yes</button>
+    <button id="noBtn">No</button>
   </div>
 
   <script>
-    const storyText = document.getElementById("story");
-    const choicesDiv = document.getElementById("choices");
+    const container = document.getElementById("container");
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    let yesSize = 40;
 
-    function choose(option) {
-      if(option === 'yes') {
-        storyText.innerText = "YAY! You chose the right path ❤️";
-        choicesDiv.innerHTML = '<button class="yesBtn" onclick="finalMessage()">Finish the Adventure</button>';
-        createHearts(10);
-      } else {
-        storyText.innerText = "Haha, I think you should reconsider 😏 Try again!";
-      }
+    function moveNoButton() {
+      const containerRect = container.getBoundingClientRect();
+      const maxX = containerRect.width - noBtn.offsetWidth;
+      const maxY = containerRect.height - noBtn.offsetHeight - 100; // leave space for h1
+
+      const randomX = Math.floor(Math.random() * maxX);
+      const randomY = Math.floor(Math.random() * maxY) + 100;
+
+      noBtn.style.left = randomX + "px";
+      noBtn.style.top = randomY + "px";
+
+      // Increase Yes button
+      yesSize += 5;
+      yesBtn.style.fontSize = yesSize + "px";
+      yesBtn.style.padding = (30 + yesSize/2) + "px " + (60 + yesSize/2) + "px";
     }
 
-    function finalMessage() {
-      document.body.innerHTML = '<h1>🎉 I LOVE YOU! 🎉</h1>';
-      createHearts(20);
+    noBtn.addEventListener("touchstart", moveNoButton);
+    noBtn.addEventListener("click", moveNoButton);
+
+    function yesClicked() {
+      container.innerHTML = "<h1>YAY! I LOVE YOU!</h1>";
     }
 
-    // Function to create floating hearts
-    function createHearts(count) {
-      for(let i = 0; i < count; i++){
-        const heart = document.createElement('div');
-        heart.classList.add('heart');
-        heart.innerText = '❤️';
-        heart.style.left = Math.random() * window.innerWidth + 'px';
-        heart.style.fontSize = (20 + Math.random() * 30) + 'px';
-        document.body.appendChild(heart);
-        setTimeout(() => { heart.remove(); }, 2000);
-      }
-    }
+    // Place No button initially
+    moveNoButton();
   </script>
-
 </body>
 </html>
