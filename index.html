@@ -1,1 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>For My Love ❤️</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      font-family: Arial;
+      background: #ffe6f0;
+      overflow: hidden;
+    }
 
+    h1 {
+      font-size: 28px;
+      text-align: center;
+    }
+
+    button {
+      padding: 12px 25px;
+      font-size: 18px;
+      border: none;
+      cursor: pointer;
+      margin: 10px;
+      border-radius: 10px;
+    }
+
+    #yesBtn {
+      background-color: pink;
+    }
+
+    #noBtn {
+      background-color: lightgray;
+      position: absolute;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>Will you be my Valentine? 💖</h1>
+
+  <button id="yesBtn" onclick="yesClicked()">Yes 💕</button>
+  <button id="noBtn">No 💔</button>
+
+  <script>
+    const noBtn = document.getElementById("noBtn");
+
+    noBtn.addEventListener("touchstart", moveButton);
+    noBtn.addEventListener("mouseover", moveButton);
+
+    function moveButton() {
+      const maxX = window.innerWidth - noBtn.offsetWidth;
+      const maxY = window.innerHeight - noBtn.offsetHeight;
+
+      const randomX = Math.floor(Math.random() * maxX);
+      const randomY = Math.floor(Math.random() * maxY);
+
+      noBtn.style.left = randomX + "px";
+      noBtn.style.top = randomY + "px";
+    }
+
+    function yesClicked() {
+      document.body.innerHTML = "<h1>I LOVE YOU SO MUCH 💖🥰</h1>";
+    }
+  </script>
+
+</body>
+</html>
