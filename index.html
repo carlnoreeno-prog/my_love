@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>For My Love</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
       margin: 0;
@@ -13,35 +14,37 @@
       font-family: Arial, sans-serif;
       background: #ffe6f0;
       overflow: hidden;
+      touch-action: manipulation;
     }
 
     h1 {
-      font-size: 60px; /* Big title */
+      font-size: 60px;
       text-align: center;
       margin-bottom: 80px;
     }
 
     button {
-      padding: 30px 60px; /* Big buttons */
-      font-size: 40px; /* Big text */
+      font-size: 40px;
+      padding: 30px 60px;
       border: none;
-      cursor: pointer;
-      margin: 30px;
       border-radius: 20px;
-      transition: all 0.2s ease; /* smooth growth */
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
     }
 
     #yesBtn {
       background-color: pink;
+      z-index: 1;
     }
 
     #noBtn {
       background-color: lightgray;
       position: absolute;
+      z-index: 2;
     }
   </style>
 </head>
-
 <body>
 
   <h1>Will you be my Valentine?</h1>
@@ -52,14 +55,9 @@
   <script>
     const noBtn = document.getElementById("noBtn");
     const yesBtn = document.getElementById("yesBtn");
-    let yesSize = 40; // initial font size
+    let yesSize = 40;
 
-    // Make No button move
-    noBtn.addEventListener("touchstart", moveButton);
-    noBtn.addEventListener("mouseover", moveButton);
-
-    function moveButton() {
-      // Move No button randomly
+    function moveNoButton() {
       const maxX = window.innerWidth - noBtn.offsetWidth;
       const maxY = window.innerHeight - noBtn.offsetHeight;
 
@@ -69,15 +67,22 @@
       noBtn.style.left = randomX + "px";
       noBtn.style.top = randomY + "px";
 
-      // Grow Yes button every time No is tapped
-      yesSize += 5; // increase font size
+      // Increase Yes button size
+      yesSize += 5;
       yesBtn.style.fontSize = yesSize + "px";
       yesBtn.style.padding = (30 + yesSize/2) + "px " + (60 + yesSize/2) + "px";
     }
 
+    // Works on mobile touch
+    noBtn.addEventListener("touchstart", moveNoButton);
+    noBtn.addEventListener("click", moveNoButton); // fallback if touch not triggered
+
     function yesClicked() {
       document.body.innerHTML = "<h1>YAY! I LOVE YOU!</h1>";
     }
+
+    // Initially place No button somewhere random
+    moveNoButton();
   </script>
 
 </body>
