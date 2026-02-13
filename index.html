@@ -16,18 +16,19 @@
     }
 
     h1 {
-      font-size: 60px; /* Very big title */
+      font-size: 60px; /* Big title */
       text-align: center;
       margin-bottom: 80px;
     }
 
     button {
-      padding: 30px 60px; /* Huge buttons */
-      font-size: 40px; /* Huge text */
+      padding: 30px 60px; /* Big buttons */
+      font-size: 40px; /* Big text */
       border: none;
       cursor: pointer;
       margin: 30px;
       border-radius: 20px;
+      transition: all 0.2s ease; /* smooth growth */
     }
 
     #yesBtn {
@@ -50,11 +51,15 @@
 
   <script>
     const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    let yesSize = 40; // initial font size
 
+    // Make No button move
     noBtn.addEventListener("touchstart", moveButton);
     noBtn.addEventListener("mouseover", moveButton);
 
     function moveButton() {
+      // Move No button randomly
       const maxX = window.innerWidth - noBtn.offsetWidth;
       const maxY = window.innerHeight - noBtn.offsetHeight;
 
@@ -63,6 +68,11 @@
 
       noBtn.style.left = randomX + "px";
       noBtn.style.top = randomY + "px";
+
+      // Grow Yes button every time No is tapped
+      yesSize += 5; // increase font size
+      yesBtn.style.fontSize = yesSize + "px";
+      yesBtn.style.padding = (30 + yesSize/2) + "px " + (60 + yesSize/2) + "px";
     }
 
     function yesClicked() {
